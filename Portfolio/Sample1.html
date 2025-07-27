@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Doe - Creative Developer & Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* ------------------- */
+        /* --- CSS Reset --- */
+        /* ------------------- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 5rem; /* Offset for fixed header */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            max-width: 65ch; /* Improves readability */
+        }
+
+        a {
+            color: #00ffc3;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ------------------- */
+        /* --- Global Styles & Utility Classes --- */
+        /* ------------------- */
+        :root {
+            --primary-color: #00ffc3;
+            --secondary-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --heading-color: #ffffff;
+            --container-width: 1100px;
+            --section-padding: 6rem 0;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .section {
+            padding: var(--section-padding);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #0a0a0a;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        /* ------------------- */
+        /* --- Header & Navigation --- */
+        /* ------------------- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 0;
+            z-index: 1000;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .main-header.scrolled {
+            box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+            padding: 0.5rem 0;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--heading-color);
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        /* Mobile Nav Toggle */
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .nav-toggle .hamburger {
+            display: block;
+            position: relative;
+            width: 25px;
+            height: 2px;
+            background-color: var(--heading-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-toggle .hamburger::before,
+        .nav-toggle .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 2px;
+            background-color: var(--heading-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-toggle .hamburger::before {
+            transform: translateY(-8px);
+        }
+        .nav-toggle .hamburger::after {
+            transform: translateY(8px);
+        }
+
+
+        /* ------------------- */
+        /* --- Hero Section --- */
+        /* ------------------- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+        }
+        
+        /* Animated text effect */
+        .hero-content h1 span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px) rotate(10deg);
+            animation: fadeInWord 1s forwards;
+        }
+        
+        .hero-content h1 span:nth-child(1) { animation-delay: 0.2s; }
+        .hero-content h1 span:nth-child(2) { animation-delay: 0.4s; }
+        .hero-content h1 span:nth-child(3) { animation-delay: 0.6s; }
+        .hero-content h1 span:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInWord {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+        
+        /* Background particles effect */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0;
+            animation: rise 10s infinite linear;
+        }
+        
+        @keyframes rise {
+            to {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+        }
+
+        /* ------------------- */
+        /* --- About Section --- */
+        /* ------------------- */
+        #about .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .skills-list li {
+            background-color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* ------------------- */
+        /* --- Projects Section --- */
+        /* ------------------- */
+        #projects {
+            background-color: var(--secondary-color);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: #0a0a0a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+        
+        .project-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags span {
+            background-color: var(--primary-color);
+            color: #0a0a0a;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .project-links {
+            margin-top: 1rem;
+        }
+
+        .project-links a {
+            margin-right: 1rem;
+            font-weight: 500;
+        }
+        
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+        
+
+        /* ------------------- */
+        /* --- Contact Section --- */
+        /* ------------------- */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content h2 {
+            margin-bottom: 2rem;
+        }
+
+        .contact-content p {
+            margin: 0 auto 2.5rem;
+        }
+        
+        /* ------------------- */
+        /* --- Footer --- */
+        /* ------------------- */
+        .main-footer {
+            background-color: var(--secondary-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+        }
+
+        /* ------------------- */
+        /* --- Responsive Design --- */
+        /* ------------------- */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-content .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            /* Mobile Navigation */
+            .nav-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Start off-screen */
+                width: 100%;
+                height: 100vh;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: #0a0a0a;
+                transition: right 0.5s ease-in-out;
+            }
+            
+            body.nav-open .nav-links {
+                right: 0; /* Slide in */
+            }
+            
+            /* Animate hamburger to 'X' */
+            body.nav-open .nav-toggle .hamburger {
+                background-color: transparent;
+            }
+            body.nav-open .nav-toggle .hamburger::before {
+                transform: rotate(45deg);
+            }
+             body.nav-open .nav-toggle .hamburger::after {
+                transform: rotate(-45deg);
+            }
+            
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+            
+            /* About Section */
+            #about .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .about-image {
+                margin: 0 auto 2rem;
+                max-width: 300px;
+            }
+            
+            .skills-list {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header" id="main-header">
+        <nav class="container main-nav">
+            <a href="#" class="logo">JD<span>.</span></a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                 <span class="hamburger"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section id="hero" class="section">
+            <div class="particles" id="particles-js"></div>
+            <div class="container hero-content">
+                <h1>
+                    <span>Creative</span> <span>Developer</span>
+                    <br>
+                    <span>&</span> <span>Designer</span>
+                </h1>
+                <p class="subtitle">I build beautiful, responsive, and user-centric web experiences.</p>
+                <a href="#projects" class="btn">View My Work</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1888&auto=format&fit=crop" 
+                         alt="A portrait of Jane Doe" class="about-image"
+                         onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/e0e0e0?text=Jane+Doe';">
+                    <div class="about-text">
+                        <h3>Hi, I'm Jane Doe.</h3>
+                        <p>I am a passionate and detail-oriented developer based in a city of dreams, with a strong focus on creating elegant and effective solutions. With a background in both design and front-end development, I bridge the gap between aesthetics and functionality.</p>
+                        <p>My goal is to craft digital products that not only look good but are also intuitive, accessible, and performant. When I'm not coding or designing, you can find me exploring new coffee shops or hiking in the mountains.</p>
+                        <ul class="skills-list">
+                            <li>HTML5</li>
+                            <li>CSS3</li>
+                            <li>Flexbox</li>
+                            <li>CSS Grid</li>
+                            <li>Responsive Design</li>
+                            <li>UI/UX Principles</li>
+                            <li>Figma</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">My Projects</h2>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <div class="project-card">
+                        <div class="project-image-container">
+                            <img src="https://images.unsplash.com/photo-1555774698-0b77e0abfe3d?q=80&w=2070&auto=format&fit=crop" 
+                                 alt="Project One Screenshot" class="project-image"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/e0e0e0?text=Project+1';">
+                        </div>
+                        <div class="project-info">
+                            <h3>E-commerce Platform</h3>
+                             <div class="project-tags">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>Responsive</span>
+                            </div>
+                            <p>A modern, clean design for an online store. Focused on a seamless user experience from browsing to checkout.</p>
+                            <div class="project-links">
+                                <a href="#" target="_blank">Live Demo</a>
+                                <a href="#" target="_blank">View Code</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="project-card">
+                         <div class="project-image-container">
+                            <img src="https://images.unsplash.com/photo-1506784983877-45594efa4c85?q=80&w=2069&auto=format&fit=crop" 
+                                 alt="Project Two Screenshot" class="project-image"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/e0e0e0?text=Project+2';">
+                        </div>
+                        <div class="project-info">
+                            <h3>Task Management App</h3>
+                            <div class="project-tags">
+                                <span>HTML</span>
+                                <span>CSS Grid</span>
+                            </div>
+                            <p>A minimalist interface for a productivity application, designed to help users focus on what's important.</p>
+                             <div class="project-links">
+                                <a href="#" target="_blank">Live Demo</a>
+                                <a href="#" target="_blank">View Code</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="project-card">
+                         <div class="project-image-container">
+                            <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?q=80&w=1974&auto=format&fit=crop" 
+                                 alt="Project Three Screenshot" class="project-image"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/e0e0e0?text=Project+3';">
+                        </div>
+                        <div class="project-info">
+                            <h3>Personal Blog Theme</h3>
+                             <div class="project-tags">
+                                <span>HTML</span>
+                                <span>CSS Flexbox</span>
+                            </div>
+                            <p>A content-focused, readable, and elegant theme for writers and creatives. Typography was a key consideration.</p>
+                             <div class="project-links">
+                                <a href="#" target="_blank">Live Demo</a>
+                                <a href="#" target="_blank">View Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container contact-content">
+                <h2 class="section-title">Get In Touch</h2>
+                <p>I'm currently available for freelance work and open to discussing new projects. Whether you have a question or just want to say hi, my inbox is always open. I'll get back to you as soon as possible!</p>
+                <a href="mailto:hello@janedoe.com" class="btn">Say Hello</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="#" target="_blank" title="GitHub">
+                    <!-- In-line SVG for icons -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="#" target="_blank" title="LinkedIn">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <a href="#" target="_blank" title="Twitter">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                </a>
+            </div>
+            <p class="copyright">&copy; 2025 Jane Doe. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // --- Pure CSS functionality, JS for minor enhancements ---
+
+        // 1. Mobile Navigation Toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navLinks = document.getElementById('nav-links');
+        
+        navToggle.addEventListener('click', () => {
+            document.body.classList.toggle('nav-open');
+        });
+        
+        // Close nav when a link is clicked
+        navLinks.addEventListener('click', () => {
+            document.body.classList.remove('nav-open');
+        });
+
+        // 2. Add shadow to header on scroll
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // 3. Active nav link highlighting on scroll
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', ()=> {
+            let current = '';
+            sections.forEach( section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(pageYOffset >= (sectionTop - sectionHeight / 3)){
+                    current = section.getAttribute('id');
+                }
+            })
+
+            navLi.forEach( a => {
+                a.classList.remove('active');
+                if(a.getAttribute('href').includes(current)){
+                    a.classList.add('active');
+                }
+            })
+        });
+
+        // 4. Create background particles
+        const particlesContainer = document.getElementById('particles-js');
+        const particleCount = 50; // Adjust number of particles
+
+        for (let i = 0; i < particleCount; i++) {
+            let particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            let size = Math.random() * 5 + 1;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            particle.style.top = `${Math.random() * 100}vh`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            
+            particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+
+</body>
+</html>
